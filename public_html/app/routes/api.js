@@ -46,7 +46,7 @@ module.exports = function(app, express) {
             }
 
             if (user) {
-                // check if you need to verify group membership (memberof), otherwise, just generate the token
+                // check if group membership (memberof) is required to access the application, otherwise, just generate the token
                 if (!!config.ldapgroup) {
                     if (!!user.memberOf) {
                         for (var group of user.memberOf) {
@@ -100,7 +100,7 @@ module.exports = function(app, express) {
         res.json({success: true, message: 'API is working'});
     });
 
-    // more routes for our API go here
+    // more routes for the API go here
 
     // api endpoint to get user information
     apiRouter.get('/me', function (req, res) {

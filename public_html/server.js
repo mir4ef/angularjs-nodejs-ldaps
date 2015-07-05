@@ -1,10 +1,7 @@
 // Miroslav Georgiev
 'use strict';
 
-// BASE SETUP
-// ======================================
-
-// CALL THE PACKAGES --------------------
+// load the packages
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
