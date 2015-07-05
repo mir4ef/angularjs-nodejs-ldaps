@@ -1,0 +1,58 @@
+@import "vars.less";
+@-ms-viewport{width: device-width;}
+@-o-viewport {width: device-width;}
+/**********************************************/
+/*         Default Style Declarations         */
+/**********************************************/
+*
+{
+    margin: 0;
+    padding: 0;
+}
+html
+{
+    background: #000;
+    color: @defaultFontColor;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: @defaultFontSizeBody;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-align: left;
+}
+body
+{
+    background: #f1f1f1;
+    position: relative;
+}
+h1, h2
+{
+    color: @defaultTitleColor;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+a, a:visited
+{
+    color: #105bab;
+    text-decoration: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+a:hover
+{
+    color: #31a3d1;
+    text-decoration: none;
+}
+form
+{
+    background-color: #fff;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+button
+{
+    border-radius: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary
+{
+    display: block;
+}

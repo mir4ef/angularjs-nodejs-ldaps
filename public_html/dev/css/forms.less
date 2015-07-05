@@ -1,0 +1,69 @@
+@import "vars.less";
+/********************************************/
+/*         Forms Style Declarations         */
+/********************************************/
+form
+{
+    box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+    margin-top: 20px;
+    .form-row
+    {
+        padding: 5px 10px;
+        label
+        {
+            display: inline-block;
+            margin-right: 10px;
+            text-align: right;
+            width: calc(~"50% - 10px");
+        }
+        input[type='text'], input[type='password']
+        {
+            font-size: 15px;
+            padding: 5px 10px;
+        }
+    }
+}
+.btn:hover:not(:disabled), button:focus:not(:disabled)
+{
+    background-color: #31a3d1;
+}
+.btn:disabled {background: rgba(0, 0, 0, 0.1);}
+.btn-controls
+{
+    margin-top: 15px;
+    text-align: center;
+    button
+    {
+        border: 0 none;
+        border-radius: 0;
+        color: #fff;
+        font-size: @defaultFontSizeBody;
+        height: 45px;
+        margin-right: 15px;
+        padding: 10px 15px;
+        &:hover {cursor: pointer;}
+        &:disabled {cursor: not-allowed;}
+    }
+    button:last-child {margin-right: 0;}
+}
+.btn-save,
+.btn,
+.btn-large
+{
+    background-color: #105bab;
+}
+.btn-submit
+{
+    background-color: #105bab;
+    &:hover:not(:disabled), &:focus:not(:disabled)
+    {
+        background-color: #31a3d1;
+    }
+}
+.btn-reset
+{
+    background-color: #666;
+    &:hover:not(:disabled) {background-color: #999;}
+    &:focus:not(:disabled) {background-color: #888;}
+}
+.forgot-password {margin-top: 30px;}

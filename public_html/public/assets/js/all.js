@@ -1,0 +1,2 @@
+"use strict";for(var currentYear=(new Date).getUTCFullYear(),yearFields=document.getElementsByClassName("current-year"),i=yearFields.length;i--;)yearFields[i].textContent=currentYear;
+//# sourceMappingURL=all.js.map

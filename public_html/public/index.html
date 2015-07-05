@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" ng-app="ldap">
+    <head>
+        <title>AngularJS/NodeJS LDAPS Demo</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Miroslav Georgiev" />
+        
+        <base href="/" />
+        
+        <!-- START Stylesheet Declaration -->
+        <link rel="stylesheet" href="assets/libs/fontawesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="assets/libs/animate.css/animate.min.css" />
+        <link rel="stylesheet" href="assets/css/app.min.css" />
+        <link rel="stylesheet" href="assets/css/print.css" media="print" />
+        <!-- END Stylesheet Declaration -->
+    </head>
+    <body ng-controller="MainCtrl as main">
+        <header id="branding">
+            <h1>AngularJS/NodeJS LDAPS Demo</h1>
+            <nav>
+                <a ng-if="!main.isLoggedIn" href="/login">Login</a>
+                <a ng-if="main.isLoggedIn" href="javascript:" ng-click="main.doLogout();">Logout</a>
+            </nav>
+        </header>
+        
+        <main role="main">
+            <div ng-view></div>
+        </main>
+        
+        <footer role="contentinfo">&copy; <span class="current-year"></span>Miroslav Georgiev. All rights reserved.</footer>
+        
+        <!-- START JavaScript Declaration -->
+        <script src="assets/libs/angular/angular.min.js"></script>
+        <script src="assets/libs/angular-animate/angular-animate.min.js"></script>
+        <script src="assets/libs/angular-route/angular-route.min.js"></script>
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/all.js"></script>
+        <!-- END JavaScript Declaration -->
+    </body>
+</html>

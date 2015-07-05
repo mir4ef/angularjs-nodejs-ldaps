@@ -1,0 +1,24 @@
+{
+    "name": "LDAP",
+    "description": "Authenticating AngularJS/NodeJS application with LDAPS",
+    "version": "0.2.0",
+    "authors": [
+        "Miroslav Georgiev <@mir4ef>"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "animate.css": "^3.3.0",
+        "angular": "~1.4.1",
+        "angular-route": "~1.4.1",
+        "angular-animate": "~1.4.1",
+        "fontawesome": "^4.3.0"
+    }
+}

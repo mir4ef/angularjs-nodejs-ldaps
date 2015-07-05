@@ -1,0 +1,23 @@
+<h1>Login</h1>
+<form novalidate name="userLogin" role="form" ng-submit="login.doLogin();">
+    <div class="form-row">
+        <label for="txtUsername">Username</label>
+        <input id="txtUsername" name="txtUsername" type="text" class="form-control" placeholder="Username" required ng-model="login.loginData.username" ng-model-options="{ updateOn: 'default blur', debounce: { default: 700, blur: 0} }" ng-minlength="3" />
+        <div class="err-message" ng-show="userLogin.txtUsername.$error.required && !userLogin.txtUsername.$pristine">Username is required.</div>
+        <div class="err-message" ng-show="userLogin.txtUsername.$error.minlength && !userLogin.txtUsername.$pristine">Not a valid username.</div>
+    </div>
+    <div class="form-row">
+        <label for="txtPassword">Password</label>
+        <input id="txtPassword" name="txtPassword" type="password" class="form-control" placeholder="Password" required ng-model="login.loginData.password" ng-model-options="{ updateOn: 'default blur', debounce: { default: 100, blur: 0} }" ng-minlength="3" />
+        <div class="err-message" ng-show="userLogin.txtPassword.$error.required && !userLogin.txtPassword.$pristine">Password is required.</div>
+        <div class="err-message" ng-show="userLogin.txtPassword.$error.minlength && !userLogin.txtPassword.$pristine">Not a valid password.</div>
+    </div>
+    <div class="err-message bold" ng-if="login.error">{{login.error}}</div>
+    <div class="btn-controls">
+        <button type="submit" class="btn btn-submit" ng-disabled="userLogin.$pristine || userLogin.$invalid">
+            <span ng-if="!login.processing">Login</span>
+            <span class="spinner" ng-if="login.processing"><i class="fa fa-repeat"></i></span>
+        </button>
+        <button class="btn btn-reset" type="button" name="btn-reset" ng-click="login.reset(userLogin);" ng-disabled="userLogin.$pristine">Reset</button>
+    </div>
+</form>

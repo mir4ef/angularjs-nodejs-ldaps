@@ -1,0 +1,31 @@
+/******************************************/
+/*         Variables Declarations         */
+/******************************************/
+@orange: #f63;
+@defaultTitleColor: @orange;
+@defaultFontColor: #000;
+@defaultFontSizeBody: 15px;
+
+.bg (@bgColor)
+{
+    background: #000;
+    background: -moz-linear-gradient(top, @bgColor) 0 0 no-repeat;
+    background: -o-linear-gradient(top, @bgColor) 0 0 no-repeat;
+    background: -webkit-linear-gradient(top, @bgColor) 0 0 no-repeat;
+    background: linear-gradient(to bottom, @bgColor) 0 0 no-repeat;
+}
+
+@defaultBorder: 1px solid #ddd;
+@defaultBorderRadius: 0;
+.borderStyle (@width: 1px, @type: solid, @color: #ddd)
+{
+    border: @width @type @color;
+}
+.resetBorder (@width: 0, @type: none)
+{
+    border: @width @type;
+}
+.borderRadius (@radius: 0)
+{
+    border-radius: @radius;
+}

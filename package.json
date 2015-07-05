@@ -1,0 +1,35 @@
+{
+  "name": "LDAP",
+  "description": "Authenticating AngularJS/NodeJS application with LDAPS",
+  "version": "0.2.0",
+  "author": "Miroslav Georgiev <@mir4ef>",
+  "private": true,
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-jasmine": "^2.0.1",
+    "gulp-jshint": "^1.9.4",
+    "gulp-less": "^3.0.2",
+    "gulp-minify-css": "^1.0.0",
+    "gulp-ng-annotate": "^0.5.2",
+    "gulp-nodemon": "^2.0.2",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.5.1",
+    "gulp-uglify": "^1.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "^4.12.4",
+    "jsonwebtoken": "^5.0.1",
+    "ldapjs": "mcavage/node-ldapjs",
+    "ldapauth-fork": "^2.3.2",
+    "morgan": "^1.5.3",
+    "passport": "^0.2.2",
+    "passport-ldapauth": "^0.3.0"
+  }
+}
