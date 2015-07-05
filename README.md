@@ -29,6 +29,7 @@ Configuration settings to match your application needs/specifications:
 1.1 Regular LDAP (non-secure):
 
 ```javascript
+//config.js
 //...
 'secret': 'superSecret', // a password/phrase used to encode/decode the token
 'ldap': {
@@ -44,7 +45,7 @@ ldapgroup: 'CN=Group_Name,OU=Company Groups,DC=company,DC=com' // optional, need
 //...
 ```
 
-To see all the available options for the server settings, please (see here)[https://github.com/vesse/node-ldapauth-fork/blob/master/lib/ldapauth.js#L25-93].
+To see all the available options for the server settings, please [see here](https://github.com/vesse/node-ldapauth-fork/blob/master/lib/ldapauth.js#L25-93).
 
 1.2 Secure LDAP (= LDAPS):
 You will need to prefix the ldap url with `ldaps` and add the certificate(s) under the `tlsOptions`:
@@ -151,7 +152,7 @@ passport.authenticate(['ldap1', 'ldap2'], {session: false}, function(err, user, 
 //...
 ```
 
-**Note:** Using more than one LDAP URL should work as a failover. However, currently it is not due to an error handling problem in `LdapAuth` (see (this post)[https://github.com/vesse/node-ldapauth-fork/pull/20]). The application bombs out if the first server is not accessible, but works fine if the second, third, etc. are not.
+**Note:** Using more than one LDAP URL should work as a failover. However, currently it is not due to an error handling problem in `LdapAuth` (see [this post](https://github.com/vesse/node-ldapauth-fork/pull/20)). The application bombs out if the first server is not accessible, but works fine if the second, third, etc. are not.
 
 
 2. The content and the duration of the token can be customized in the application in the api.js file under the `/login` router:
