@@ -138,7 +138,7 @@ function authUser(req, res, next) {
 //...
 ```
 
-If you use more than one strategy, hence, more than one URL, your 'failed to authenticate' response message will be an array of objects:
+If you use more than one strategy, hence, more than one URL, your 'failed to authenticate' response message will be an array of objects (rather than just an object):
 ```javascript
 //...
 passport.authenticate(['ldap1', 'ldap2'], {session: false}, function(err, user, info) {
