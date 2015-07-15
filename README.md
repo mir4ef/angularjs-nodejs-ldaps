@@ -18,7 +18,7 @@ Note: The `-g` flag will install it globally and requires admin (`sudo`) rights 
 
 3. To install all backend dependencies, including the development ones, please run `npm install` from the application folder.
 
-4. To install all frontend dependencies, please run 'bower install' from the application folder. The `.bowerrc' file specifies the destination of the frontend dependencies like angularjs, bootstrap, etc. If you are not using Netbeans, your path might be different, so you might need to update it to match your folder structure.
+4. To install all frontend dependencies, please run 'bower install' from the application folder. The `.bowerrc` file specifies the destination of the frontend dependencies like angularjs, bootstrap, etc. If you are not using Netbeans, your path might be different, so you might need to update it to match your folder structure.
 
 
 ## Settings:
