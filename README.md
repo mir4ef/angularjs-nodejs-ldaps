@@ -11,14 +11,14 @@ For more information please see *Settings* below.
 Clone the application and do the following to have it up and running locally:
 
 1. NodeJS is required (v >0.12). It can be downloaded and installed from [here](https://nodejs.org/).
-- Nodemon is optional. It is used to automatically restart/reload the server on changes to the backend. It can be downloaded and installed by running `npm install -g nodemon`. Then you can just run the application/server by going to the application folder and typing `nodemon server.js`.
+- Nodemon is optional. It is used to automatically restart/reload the server on changes to the backend. It can be downloaded and installed by running `npm install -g nodemon`. Then you can just run the application/server by going to the application folder and typing `nodemon server.js`. Note: The `-g` flag will install it globally and requires admin (`sudo`) rights for the current user.
 
 2. Bower is optional. If you want to use the current frontend as a starting point you can download and install `bower` by running `npm install -g bower`. However, you are free to use whatever frontend you want.
-Note: The `-g` flag will install it globally and requires admin (`sudo`) rights for the current user
+Note: The `-g` flag will install it globally and requires admin (`sudo`) rights for the current user.
 
 3. To install all backend dependencies, including the development ones, please run `npm install` from the application folder.
 
-4. To install all frontend dependencies, please run 'bower install' from the application folder. The `.bowerrc` file specifies the destination of the frontend dependencies like angularjs, bootstrap, etc. If you are not using Netbeans, your path might be different, so you might need to update it to match your folder structure.
+4. To install all frontend dependencies, please run `bower install` from the application folder. The `.bowerrc` file specifies the destination of the frontend dependencies like angularjs, bootstrap, etc. If you are not using Netbeans, your path might be different, so you might need to update it to match your folder structure.
 
 
 ## Settings:
@@ -71,7 +71,8 @@ var fs = require('fs');
 ```
 
 Ideally, you should use only one LDAP(S) URL - the load balancer, and not worrying about one LDAP sever going down, etc. That is the job of the load balancer, not yours. BUT, if, for whatever reason, you need to use more than one LDAP URL, you can:
-1.1 Using multiple LDAP URLs:
+
+1.3 Using multiple LDAP URLs:
  - Each URL requires separate set of settings. For example, to specify two LDAP URLs, you will need to add a second set of server options/settings to your `config.js`:
 
 ```javascript
