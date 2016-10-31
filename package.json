@@ -1,35 +1,72 @@
 {
   "name": "LDAP",
   "description": "Authenticating AngularJS/NodeJS application with LDAPS",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Miroslav Georgiev <@mir4ef>",
   "private": true,
+  "engines": {
+    "node": ">=6.3.0"
+  },
   "main": "server.js",
+  "scripts": {
+    "postinstall": "bower install && npm run build && npm test",
+    "build": "gulp build",
+    "test": "karma start --singleRun"
+  },
   "directories": {
     "test": "test"
   },
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mir4ef/angularjs-nodejs-ldaps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mir4ef/angularjs-nodejs-ldaps/issues"
+  },
+  "license": "Apache License 2.0",
   "devDependencies": {
+    "angular-jsdoc": "^1.5.0",
+    "bower": "^1.6.8",
+    "del": "^2.2.1",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
-    "gulp-jasmine": "^2.0.1",
-    "gulp-jshint": "^1.9.4",
-    "gulp-less": "^3.0.2",
-    "gulp-minify-css": "^1.0.0",
-    "gulp-ng-annotate": "^0.5.2",
-    "gulp-nodemon": "^2.0.2",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-less": "^3.0.5",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-nsp": "^2.4.2",
     "gulp-rename": "^1.2.0",
-    "gulp-sourcemaps": "^1.5.1",
-    "gulp-uglify": "^1.1.0"
+    "gulp-shell": "^0.5.2",
+    "gulp-sourcemaps": "^2.0.1",
+    "gulp-uglify": "^2.0.0",
+    "imagemin-pngquant": "^5.0.0",
+    "jasmine-core": "^2.4.1",
+    "jsdoc": "^3.4.1",
+    "karma": "^1.2.0",
+    "karma-bamboo-reporter": "^0.1.2",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-opera-launcher": "^1.0.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-spec-reporter": "0.0.26",
+    "nodemon": "^1.9.1",
+    "swagger-jsdoc": "^1.7.0"
   },
   "dependencies": {
-    "body-parser": "^1.12.4",
-    "express": "^4.12.4",
-    "jsonwebtoken": "^5.0.1",
-    "ldapjs": "mcavage/node-ldapjs",
-    "ldapauth-fork": "^2.3.2",
+    "body-parser": "^1.14.1",
+    "compression": "^1.6.1",
+    "express": "^4.14.0",
+    "helmet": "^3.0.0",
+    "jsonwebtoken": "^7.0.0",
+    "ldapauth-fork": "^2.5.2",
+    "ldapjs": "^1.0.0",
     "morgan": "^1.5.3",
-    "passport": "^0.2.2",
-    "passport-ldapauth": "^0.3.0"
+    "passport": "^0.3.2",
+    "passport-ldapauth": "^0.6.0",
+    "spdy": "^3.3.2"
   }
 }
