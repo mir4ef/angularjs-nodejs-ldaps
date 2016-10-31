@@ -1,92 +1,204 @@
 // Miroslav Georgiev
 'use strict';
 
-var gulp = require('gulp');
-var less = require('gulp-less');
-var minifyCSS = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var jasmine = require('gulp-jasmine');
-var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var ngAnnotate = require('gulp-ng-annotate');
-var nodemon = require('gulp-nodemon');
-var sourcemaps = require('gulp-sourcemaps');
+const pkg = require('./package.json');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const less = require('gulp-less');
+const minifyCSS = require('gulp-cssnano');
+const rename = require('gulp-rename');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const ngAnnotate = require('gulp-ng-annotate');
+const sourcemaps = require('gulp-sourcemaps');
+const imagemin = require('gulp-imagemin');
+const pngquant = require('imagemin-pngquant');
+const del = require('del');
+const shell = require('gulp-shell');
+const swaggerJSDoc = require('swagger-jsdoc');
+const gulpNSP = require('gulp-nsp');
+
+function string_src(filename, string) {
+    var src = require('stream').Readable({ objectMode: true });
+
+    src._read = function () {
+        this.push(new gutil.File({
+            cwd: "",
+            base: "",
+            path: filename,
+            contents: new Buffer(string)
+        }));
+
+        this.push(null);
+    };
+
+    return src;
+}
 
 // css tasks
-gulp.task('css', function () {
-    var stream = gulp
-            .src('public_html/dev/css/app.less')
+gulp.task('css', () => {
+    const stream = gulp
+            .src('dev/css/all.less')
             .pipe(less())
-            .pipe(gulp.dest('public_html/public/assets/css'))
+            .pipe(gulp.dest('public/css'))
             .pipe(sourcemaps.init())
             .pipe(minifyCSS())
             .pipe(rename({suffix: '.min'}))
             .pipe(sourcemaps.write('.'))
-            .pipe(gulp.dest('public_html/public/assets/css'));
+            .pipe(gulp.dest('public/css'));
+
+    return stream;
+});
+
+gulp.task('fonts', () => {
+    const stream = gulp
+        .src(['dev/fonts/*', 'public/libs/bootstrap/fonts/*', 'public/libs/font-awesome/fonts/*'])
+        .pipe(gulp.dest('public/fonts'));
+
     return stream;
 });
 
 // js tasks
-gulp.task('js', function () {
-    var stream = gulp
-            .src(['publich_html/*.js', 'public_html/public/app/*.js', 'public_html/app/**/*.js', 'public_html/dev/js/*.js'])
-            .pipe(jshint())
-            .pipe(jshint.reporter('default'));
-    return stream;
-});
-
-gulp.task('scripts', function () {
-    var stream = gulp
-            .src(['public_html/dev/js/*.js'])
+gulp.task('scripts', () => {
+    const stream = gulp
+            .src(['dev/js/*.js', 'dev/js/**/*.js'])
             .pipe(sourcemaps.init())
             .pipe(concat('all.js'))
             .pipe(uglify())
             .pipe(sourcemaps.write('.'))
-            .pipe(gulp.dest('public_html/public/assets/js'));
+            .pipe(gulp.dest('public/js'));
+
     return stream;
 });
 
-gulp.task('angular', function () {
-    var stream = gulp
-            .src(['public_html/public/app/*.js', 'public_html/public/app/**/*.js'])
+gulp.task('angular', () => {
+    const stream = gulp
+            .src([
+                'public/app/*.js',
+                '!public/app/*.spec.js',
+                'public/app/**/*.module.js',
+                'public/app/**/*.js',
+                '!public/app/**/*.spec.js',
+                'public/app/**/**/*.module.js',
+                'public/app/**/**/*.js',
+                '!public/app/**/**/*.spec.js'
+            ])
             .pipe(sourcemaps.init())
             .pipe(ngAnnotate())
             .pipe(concat('app.js'))
             .pipe(uglify())
             .pipe(sourcemaps.write('.'))
-            .pipe(gulp.dest('public_html/public/assets/js'));
+            .pipe(gulp.dest('public/js'));
+
     return stream;
 });
 
-// test runner
-gulp.task('unittest', function () {
-    return gulp.src('test/unit/*.js')
-        .pipe(jasmine());
+// image task
+gulp.task('images', () => {
+    const stream = gulp.src(['dev/images/*', 'dev/images/**/*', '!dev/images/icons/apple-touch-icon*'], { base: 'dev/images/' })
+        .pipe(imagemin({
+            progressive: true,
+            optimizationLevel: 7,
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('public/images/'));
+
+    return stream;
 });
+
+gulp.task('apple', () => {
+    const stream = gulp.src(['dev/images/icons/apple-touch-icon-*'])
+        .pipe(imagemin({
+            progressive: true,
+            optimizationLevel: 7,
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('public/'));
+
+    return stream;
+});
+
+// documentation tasks
+// generate the schema in JSON format for Swagger
+gulp.task('apischema', ['clean:apidocs'], () => {
+    const swaggerDefinition = {
+        swagger: "2.0",
+        info: {
+            title: 'App Name', // Title (required)
+            version: pkg.version // Version (required)
+        },
+        schemes: ["https"],
+        basePath: "/api"
+    };
+    const swoptions = {
+        swaggerDefinition: swaggerDefinition,
+        apis: ['./server/routes/**/*.js'] // Path to the API docs
+    };
+
+    // Initialize swagger-jsdoc -> returns validated swagger spec in json format
+    const swaggerSpec = swaggerJSDoc(swoptions);
+
+    return string_src("swagger.json", JSON.stringify(swaggerSpec, null, 2))
+        .pipe(gulp.dest('dev/api/schema'));
+});
+
+gulp.task('apidocs', ['apischema'], () => {
+    const stream = gulp
+        .src(['dev/api/*', 'dev/api/**/*'], { base: 'dev/api/' })
+        .pipe(gulp.dest('public/documentation/api'));
+
+    return stream;
+});
+
+gulp.task('angulardocs', ['clean:angulardocs'], shell.task([
+    'node_modules/jsdoc/jsdoc.js '+
+    '-c ./conf.json '+ // config file
+    '-t dev/angulardocs-template ' + // template file
+    './README.md ' + // to include README.md as index contents
+    '-r public/app' // source code directory
+]));
+
+// scan for vulnerabilities
+gulp.task('nsp', cb => {
+    gulpNSP({
+        package: __dirname + '/package.json',
+        stopOnError: false
+    }, cb);
+});
+
+// clean task
+gulp.task('clean', () => del(['public/css', 'public/js', 'public/fonts', 'public/images', 'public/documentation']));
+gulp.task('clean:images', () => del(['public/images']));
+gulp.task('clean:docs', () => del(['public/documentation']));
+gulp.task('clean:angulardocs', () => del(['public/documentation/app']));
+gulp.task('clean:apidocs', () => del(['dev/api/schema', 'public/documentation/api']));
 
 // auto run
-gulp.task('watch', function () {
+gulp.task('watch', () => {
     // watch the css files
-    gulp.watch('public_html/dev/css/*.less', ['css']);
+    gulp.watch(['dev/css/*.less', 'dev/css/**/*.less'], ['css']);
 
     // watch the js files
-    gulp.watch(['public_html/dev/js/*.js', 'public_html/public/app/*.js', 'public_html/public/app/**/*.js'], ['scripts', 'angular']);
-//    gulp.watch(['public_html/dev/js/*.js', 'public_html/public/app/*.js', 'public_html/public/app/**/*.js'], ['scripts', 'angular', 'unittest']);
+    gulp.watch(['dev/js/*.js', 'dev/js/**/*.js'], ['scripts']);
+
+    // watch angular files
+    gulp.watch(['public/app/!(*.spec).js', 'public/app/**/!(*.spec).js', 'public/app/**/**/!(*.spec).js', 'README.md'], ['angular', 'angulardocs']);
+
+    // watch image files
+    gulp.watch(['dev/images/*'], ['images', 'apple']);
+
+    // watch the api route files
+    gulp.watch(['server/routes/**/*.js', 'dev/api/!(*.json)', 'dev/api/**/!(*.json)'], ['apidocs']);
+
+    // watch the package.json file for changes and scan for vulnerabilities
+    gulp.watch(['package.json'], ['nsp']);
 });
 
-// server task
-gulp.task('nodemon', function () {
-    nodemon({
-        script: 'public_html/server.js',
-        ext: 'js less html'
-    })
-            .on('start', ['watch'])
-            .on('change', ['watch'])
-            .on('restart', function () {
-                console.log('Restarted!');
-            });
-});
+// build all at once
+gulp.task('build', ['clean'], () => gulp.start('css', 'fonts', 'scripts', 'angular', 'images', 'apple', 'angulardocs', 'apidocs', 'nsp'));
+
+// generate documentation only
+gulp.task('docs', ['clean:docs'], () => gulp.start('angulardocs', 'apidocs'));
 
 // define the default gulp task
 gulp.task('default', ['watch']);

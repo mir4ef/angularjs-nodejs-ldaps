@@ -1,1 +1,0 @@
-This will be your certificate file. Usualy, ending with .pem, .cert, or .cer.
