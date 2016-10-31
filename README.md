@@ -203,5 +203,5 @@ Configuration settings to match your application needs/specifications:
     };
     ```
 
-3. API documentation is auto generated using [Swagger UI](http://swagger.io/swagger-ui/) and is accessible under `url/documentation/api`
-4. This template uses AngularJS and its documentation is auto generated using [angular-jsdoc](https://www.npmjs.com/package/angular-jsdoc) and is accessible under `url/documentation/app`
+3. API documentation is auto generated using [Swagger UI](http://swagger.io/swagger-ui/) and is accessible under `appurl/documentation/api`
+4. This template uses AngularJS and its documentation is auto generated using [angular-jsdoc](https://www.npmjs.com/package/angular-jsdoc) and is accessible under `appurl/documentation/app`
