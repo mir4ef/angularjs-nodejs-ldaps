@@ -1,0 +1,25 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /webapps/appname
+permissions:
+  - object: /webapps/appname
+    owner: apache
+    group: apache
+hooks:
+  ApplicationStop:
+    - location: codedeploy/ApplicationStop.sh
+      runas: root
+  BeforeInstall:
+    - location: codedeploy/BeforeInstall.sh
+      timeout: 600
+      runas: root
+  AfterInstall:
+    - location: codedeploy/AfterInstall.sh
+      timeout: 600
+      runas: root
+  ApplicationStart:
+    - location: codedeploy/ApplicationStart.sh
+      timeout: 60
+      runas: root
