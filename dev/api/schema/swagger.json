@@ -1,0 +1,235 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "App Name",
+    "version": "0.3.0"
+  },
+  "schemes": [
+    "https"
+  ],
+  "basePath": "/api",
+  "paths": {
+    "/v1/authenticate": {
+      "post": {
+        "summary": "Verify user and get a token",
+        "description": "Login to the application and generate a token",
+        "tags": [
+          "Authenticate"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "description": "Username in the format `some.format`.",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "description": "User's password.",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful verification of credentials and returns a token",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Authenticate"
+            }
+          },
+          "401": {
+            "description": "could not verify credentials",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/FailedAuthenticate"
+            }
+          },
+          "403": {
+            "description": "The user authenticated successfully, but is not part of the LDAP group to access the application",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/NotInLDAPGroup"
+            }
+          },
+          "500": {
+            "description": "failed to connect to LDAP or another server error",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/v1/": {
+      "get": {
+        "summary": "Reach unprotected API endpoints",
+        "description": "An API endpoint for you to make sure you are reaching the server and its unprotected api endpoints (like /authenticate, etc.)",
+        "tags": [
+          "Endpoints for Testing"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns an object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "reached API!"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/v1/protected": {
+      "get": {
+        "summary": "Reach protected API endpoints",
+        "description": "An API endpoint for you to make sure you are reaching the server and its protected api endpoints (like /collaborators, etc.)",
+        "tags": [
+          "Endpoints for Testing"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns an object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "reached protected API!"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "failed to authenticate the supplied token or no token was provided",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/FailedToken"
+            }
+          },
+          "500": {
+            "description": "server error",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FailedToken": {
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": false
+        },
+        "message": {
+          "type": "string",
+          "example": "Token not valid or not provided!"
+        }
+      }
+    },
+    "ServerError": {
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": false
+        },
+        "message": {
+          "type": "string",
+          "example": "Server or database error!"
+        }
+      }
+    },
+    "Authenticate": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "default": true
+        },
+        "message": {
+          "type": "string",
+          "example": "Successfully authenticated!"
+        },
+        "token": {
+          "type": "string",
+          "example": "token.in.jwt.format"
+        }
+      }
+    },
+    "FailedAuthenticate": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "default": false
+        },
+        "message": {
+          "type": "string",
+          "example": "Wrong credentials!"
+        }
+      }
+    },
+    "NotInLDAPGroup": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "default": false
+        },
+        "message": {
+          "type": "string",
+          "example": "User is not part of the LDAP group"
+        }
+      }
+    }
+  },
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": []
+}

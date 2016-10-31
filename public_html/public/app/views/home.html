@@ -1,9 +1,0 @@
-<h2>Welcome to our Application!</h2>
-
-<div ng-if="!main.isLoggedIn">
-    <p><a href="/login">Login</a> to gain access to the application.</p>
-</div>
-
-<div ng-if="main.isLoggedIn">
-    <p>Hello <span class="bold">{{main.user.name}}</span>! You can <a href="javascript:" ng-click="main.doLogout();">logout</a> now. Thank you for visiting!</p>
-</div>

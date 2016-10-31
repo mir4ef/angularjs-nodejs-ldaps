@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <title>AngularJS/NodeJS LDAPS Demo</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Miroslav Georgiev" />
+        
+        <base href="/" />
+
+        <meta name="application-name" content="App Name" />
+        <meta name="fragment" content="!" />
+
+        <link rel="mask-icon" sizes="any" href="images/icons/favicon.svg" color="#ffffff" />
+        <link rel="shortcut icon" type="image/x-icon" href="images/icons/favicon.ico" />
+
+        <meta name="msapplication-TileImage" content="images/icons/launcher-icon-inverse.png" />
+        <meta name="msapplication-TileColor" content="#105bab" />
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <link rel="manifest" href="app/config/manifest.json" />
+        
+        <!-- START Stylesheet Declaration -->
+        <link rel="stylesheet" href="libs/fontawesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="libs/animate.css/animate.min.css" />
+        <link rel="stylesheet" href="css/all.min.css" />
+        <link rel="stylesheet" href="css/print.css" media="print" />
+        <!-- END Stylesheet Declaration -->
+    </head>
+    <body ng-app="appname" ng-controller="MainCtrl as main" ng-strict-di ng-cloak>
+        <header id="branding">
+            <h1>AngularJS/NodeJS LDAPS Demo</h1>
+            <nav>
+                <a ng-if="!main.isLoggedIn" href="/login">Login</a>
+                <a ng-if="main.isLoggedIn" href="javascript:" ng-click="main.doLogout();">Logout</a>
+            </nav>
+        </header>
+        
+        <main role="main">
+            <div ng-view></div>
+        </main>
+        
+        <footer role="contentinfo">&copy;<span class="current-year">{{ ::main.currentYear }}</span>Miroslav Georgiev. All rights reserved.</footer>
+        
+        <!-- START JavaScript Declaration -->
+        <script src="libs/angular/angular.min.js"></script>
+        <script src="libs/angular-animate/angular-animate.min.js"></script>
+        <script src="libs/angular-aria/angular-aria.min.js"></script>
+        <script src="libs/angular-messages/angular-messages.min.js"></script>
+        <script src="libs/angular-resource/angular-resource.min.js"></script>
+        <script src="libs/angular-route/angular-route.min.js"></script>
+        <script src="libs/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="js/app.js"></script>
+        <!-- END JavaScript Declaration -->
+    </body>
+</html>
