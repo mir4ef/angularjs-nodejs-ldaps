@@ -1,6 +1,6 @@
 # AngularJS/NodeJS app authentication with LDAP(S) Template
 
-### Current version: 0.3.0
+### Current version: 0.3.1
 
 This application is a template for NodeJS authentication using LDAP(S) and, optionally, AngularJS or anything else. It is also `HTTP/2` enabled.
 The backend of the application (NodeJS) communicates with LDAP. If the authentication is successful, the backend will create a token and pass it to the frontend to store it and pass it back with each request.
