@@ -1,7 +1,7 @@
 /**
  * @file helpers.js Server side helper functions
  * @author Miroslav Georgiev
- * @version 0.0.1
+ * @version 0.0.2
  */
 'use strict';
 
@@ -23,10 +23,14 @@ exports.handleCORS = (req, res, next) => {
  * @param {Number} code The error code for the server response
  * @param {Object} req The request object
  * @param {Object} res The response object
- * @param {Object|Function} next The call back function to allow the application to continue
+ * @param {Function} next The call back function to allow the application to continue
  * @returns {Object} Object containing the error message
  */
-exports.handleErrors = ({ message = 'An error occurred', code = 500 }, req, res, next) => res.status(code).json({ success: false, message: message });
+exports.handleErrors = ({ message = 'An error occurred', code = 500 }, req, res, next) => {
+    console.error(`${new Date()}: ERROR: error code '${code}' and message '${message}'.`);
+
+    return res.status(code).json({ success: false, message: message });
+};
 
 /**
  * @description Handler for HTTP request to redirect them to HTTPS
