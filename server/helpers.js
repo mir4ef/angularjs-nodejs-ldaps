@@ -1,7 +1,7 @@
 /**
  * @file helpers.js Server side helper functions
  * @author Miroslav Georgiev
- * @version 0.0.2
+ * @version 0.0.3
  */
 'use strict';
 
@@ -27,6 +27,10 @@ exports.handleCORS = (req, res, next) => {
  * @returns {Object} Object containing the error message
  */
 exports.handleErrors = ({ message = 'An error occurred', code = 500 }, req, res, next) => {
+    if (message.toLowerCase() === 'request entity too large') {
+        code = 413;
+    }
+
     console.error(`${new Date()}: ERROR: error code '${code}' and message '${message}'.`);
 
     return res.status(code).json({ success: false, message: message });

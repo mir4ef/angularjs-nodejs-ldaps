@@ -18,3 +18,6 @@ LDAPPASS="AD.password"
 LDAPGROUP="CN=AD_Group,OU=Department,OU=Company Groups,DC=company,DC=com"
 APP_DEBUG=false
 MAX_V8_HEAP_SIZE=8192
+MAX_REQUESTS=150
+WINDOW_MINUTES=25
+TRUST_PROXY=false

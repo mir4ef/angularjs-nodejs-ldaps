@@ -21,6 +21,12 @@ const options = {
     passphrase: config.certphrase,
     secureOptions: crypto.constants.SSL_OP_NO_TLSv1
 };
+const RateLimit = require('express-rate-limit');
+const limiter = new RateLimit({
+    windowMs: config.windowMs * 60 * 1000, // minutes windows to track requests (default 25)
+    max: config.maxRequests, // limit each IP to maximum requests per windowMs (default 150)
+    delayMs: 0 // disable delaying - full speed until the max limit is reached
+});
 
 // add the CA for non development environments e.g. test, production, etc.
 if (config.env !== 'development') {
@@ -39,6 +45,15 @@ if (config.debug) {
     app.use(morgan('dev'));
 }
 
+// enable when you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+if (config.trustProxy) {
+    app.enable('trust proxy');
+
+    if (config.debug) {
+        console.info(`${new Date()}: 'trust proxy' enabled!`);
+    }
+}
+
 // compress static files (JavaScript, CSS)
 // MUST BE PLACED BEFORE DEFINING THE STATIC FILES FOLDER/PATH!!!
 app.use(compress());
@@ -46,15 +61,14 @@ app.use(compress());
 // protect the app from some well-known web vulnerabilities by setting HTTP headers appropriately
 app.use(helmet());
 
-// use body parser to grab information from POST requests
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+// apply rate limiter to all requests
+app.use(limiter);
 
 // use body parser to get info from POST requests
 // for parsing application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: '2mb', extended: false }));
 // for parsing application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '2mb' }));
 
 // handle CORS requests
 app.use(helpers.handleCORS);
