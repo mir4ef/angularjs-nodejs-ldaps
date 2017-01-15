@@ -1,6 +1,6 @@
 # AngularJS/NodeJS app authentication with LDAP(S) Template
 
-### Current version: 0.3.1
+### Current version: 0.3.2
 
 This application is a template for NodeJS authentication using LDAP(S) and, optionally, AngularJS or anything else. It is also `HTTP/2` enabled.
 The backend of the application (NodeJS) communicates with LDAP. If the authentication is successful, the backend will create a token and pass it to the frontend to store it and pass it back with each request.
@@ -78,7 +78,7 @@ Configuration settings to match your application needs/specifications:
     You will need to prefix the ldap url with `ldaps` and add the certificate(s) under the `tlsOptions`:
 
     ```javascript
-    var fs = require('fs');
+    const fs = require('fs');
     //...
     'ldaps': {
         server: {
@@ -104,7 +104,7 @@ Configuration settings to match your application needs/specifications:
 
     ```javascript
     //config.js
-    var fs = require('fs');
+    const fs = require('fs');
     
     module.exports = {
         'port': process.env.PORT || 8080,
@@ -146,11 +146,11 @@ Configuration settings to match your application needs/specifications:
 
     ```javascript
     //api.js
-    var jwt = require('jsonwebtoken');
-    var config = require('../../config');
-    var superSecret = config.secret;
-    var passport = require('passport');
-    var LdapStrategy = require('passport-ldapauth');
+    const jwt = require('jsonwebtoken');
+    const config = require('../../config');
+    const superSecret = config.secret;
+    const passport = require('passport');
+    const LdapStrategy = require('passport-ldapauth');
     //...
     passport.use('ldap1', new LdapStrategy(config.ldap1));
     passport.use('ldap2', new LdapStrategy(config.ldap2));
@@ -186,8 +186,8 @@ Configuration settings to match your application needs/specifications:
 
 2. The content and the duration of the token can be customized in the application in the `api.js` file under the `/authenticate` api endpoint:
     ```javascript
-    var generateToken = function () {
-        var token = jwt.sign({
+    const generateToken = function () {
+        const token = jwt.sign({
             name: user.name,
             username: user.mailNickname
         }, superSecret, {
@@ -203,5 +203,5 @@ Configuration settings to match your application needs/specifications:
     };
     ```
 
-3. API documentation is auto generated using [Swagger UI](http://swagger.io/swagger-ui/) and is accessible under `appurl/documentation/api`
-4. This template uses AngularJS and its documentation is auto generated using [angular-jsdoc](https://www.npmjs.com/package/angular-jsdoc) and is accessible under `appurl/documentation/app`
+3. API documentation is auto generated (with `gulp`) using [Swagger UI](http://swagger.io/swagger-ui/) and is accessible under `appurl/documentation/api`
+4. This template uses AngularJS and its documentation is auto generated (with `gulp`) using [angular-jsdoc](https://www.npmjs.com/package/angular-jsdoc) and is accessible under `appurl/documentation/app`

@@ -1,7 +1,7 @@
 {
   "name": "LDAP",
   "description": "Authenticating AngularJS/NodeJS application with LDAPS",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Miroslav Georgiev <@mir4ef>",
   "private": true,
   "engines": {

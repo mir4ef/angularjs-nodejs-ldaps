@@ -19,7 +19,7 @@
          * @summary SITE VERSION
          * @description Sets the site version to be used when storing content in localStorage to enable versioning/updating
          */
-        version: '0.3.1',
+        version: '0.3.2',
 
         /**
          * @summary DEBUG MODE
