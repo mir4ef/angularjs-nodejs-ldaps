@@ -241,7 +241,7 @@ function apiRoutes(app, express) {
      */
     function authUser(req, res, next) {
         if (config.debug) {
-            console.info(`Trying to authenticate '${req.body.username}'...`);
+            console.info(`${new Date()}: Trying to authenticate '${req.body.username}'...`);
         }
 
         passport.authenticate('ldapauth', { session: false, userNotFound: 'Sorry, but we could not find that username.' }, (err, user, info) => {
@@ -264,20 +264,20 @@ function apiRoutes(app, express) {
             }
 
             if (config.debug) {
-                console.info(`Successfully authenticated user '${req.body.username}'.`);
+                console.info(`${new Date()}: Successfully authenticated user '${req.body.username}'.`);
             }
 
             // check if you need to verify group membership (memberof), otherwise just generate the token
             if (config.ldapgroup) {
                 if (config.debug) {
-                    console.info(`Verifying user '${req.body.username}' AD group membership for group '${config.ldapgroup}'...`);
+                    console.info(`${new Date()}: Verifying user '${req.body.username}' AD group membership for group '${config.ldapgroup}'...`);
                 }
 
                 if (!!user.memberOf) {
                     for (const group of user.memberOf) {
                         if (config.ldapgroup === group) {
                             if (config.debug) {
-                                console.info(`Successfully verified user '${req.body.username}' AD group membership for group '${config.ldapgroup}'.`);
+                                console.info(`${new Date()}: Successfully verified user '${req.body.username}' AD group membership for group '${config.ldapgroup}'.`);
                             }
 
                             return generateToken(res, user);
@@ -293,7 +293,7 @@ function apiRoutes(app, express) {
             }
 
             if (config.debug) {
-                console.info(`No AD group membership required, so skipping group membership verification for user '${req.body.username}' and generating a token...`);
+                console.info(`${new Date()}: No AD group membership required, so skipping group membership verification for user '${req.body.username}' and generating a token...`);
             }
 
             return generateToken(res, user);
